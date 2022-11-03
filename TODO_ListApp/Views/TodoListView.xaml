@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:TODO_ListApp.Views"
+             xmlns:local="clr-namespace:TODO_ListApp.Views" xmlns:viewmodels="clr-namespace:TODO_ListApp.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:TodoListViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -18,10 +18,29 @@
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
 
-            <TextBlock Text="Enter a Task:" FontSize="20" Height="33" Width="300" Margin="20" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Top"/>
+            <TextBlock Text="Enter a Task:" FontSize="20" Height="33" Width="300" Margin="20" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+            <StackPanel Grid.Column="1">
+                <TextBox  Text="{Binding Task}" Grid.Column="1" FontSize="20" Height="100" Width="200" VerticalAlignment="Top" Margin="20" TextWrapping="Wrap" HorizontalAlignment="Stretch"/>
+                <Button Content="Add" Margin="20,0,20,0" Command="{Binding AddTaskCommand}"/>
+                <Button Content="Delete" Margin="20,20,20,0"/>
+            </StackPanel>
+            
         </Grid>
 
-        <ListBox Margin="20"/>
+        <ListBox Margin="20" ItemsSource="{Binding AllTasks}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Task}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel/>
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+        </ListBox>
 
     </Grid>
 </UserControl>
